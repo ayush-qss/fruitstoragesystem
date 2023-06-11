@@ -6,12 +6,15 @@ const {
 } = require('../repository/FruitsRepository');
 const { errorMessages } = require('../constants/errorConstants.js');
 
-const findFruitService = async ({ name }) => {
+const findFruitService = async ({ name, forFruitStore }) => {
   if (!name) {
     throw new Error(errorMessages.NameRequired);
   }
   const data = await findFruit({ name });
   if (data.length === 0) {
+    if (forFruitStore) {
+      throw new Error(errorMessages.FruitNotFound + " in Fruits.");
+    }
     throw new Error(errorMessages.FruitNotFound);
   }
   return data;

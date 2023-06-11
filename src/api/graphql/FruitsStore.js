@@ -1,26 +1,48 @@
-const { objectType, extendType } = require('nexus');
-const { findFruit } = require('../../repository/FruitsRepository');
+const { objectType, extendType, nonNull, stringArg, intArg } = require('nexus');
+const { createFruitService, removeFruitService } = require('../../services/FruitsStoreService');
 
-const FruitStorage = objectType({
+const FruitStoreSchema = objectType({
   name: 'FruitStore',
   definition(t) {
     t.string('name');
-    t.string('description');
-    t.int('limit');
+    t.int('amount');
   },
 });
 
-const FruitStorageQuery = extendType({
-  type: 'Query',
+const FruitStoreMutation = extendType({
+  type: 'Mutation',
   definition(t) {
-    t.nonNull.list.field('findFruit', {
+    t.nonNull.field('storeFruitToFruitStorage', {
       type: 'FruitStore',
-      async resolve() {
-        const data = await findFruit();
+      args: {
+        name: nonNull(stringArg()),
+        amount: nonNull(intArg()),
+      },
+      async resolve(_root, args) {
+        const fields = {
+          name: args.name,
+          amount: args.amount,
+        };
+        const data = await createFruitService({ ...fields });
         return data;
       },
-    });
+    }),
+      t.nonNull.field('removeFruitFromFruitStorage', {
+        type: 'FruitStore',
+        args: {
+          name: nonNull(stringArg()),
+          amount: nonNull(intArg()),
+        },
+        async resolve(_root, args) {
+          const fields = {
+            name: args.name,
+            amount: args.amount,
+          };
+          const data = await removeFruitService({ ...fields });
+          return data;
+        },
+      });
   },
 });
 
-module.exports = { FruitStorageQuery, FruitStorage };
+module.exports = { FruitStoreMutation, FruitStoreSchema };
