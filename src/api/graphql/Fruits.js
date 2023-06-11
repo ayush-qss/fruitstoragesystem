@@ -12,6 +12,8 @@ const {
   deleteFruitService,
   updateFruitService
 } = require('../../services/FruitsService');
+const { createFruitForFruitStorage, deleteFruitFromFruitStorage, updateFruitForFruitStorage } = require("../../api/graphql/mutations/FruitsMutations")
+const { findFruit } = require("../../api/graphql/queries/FruitsQuery")
 
 const FruitsSchema = objectType({
   name: 'Fruit',
@@ -25,71 +27,16 @@ const FruitsSchema = objectType({
 const FruitQuery = extendType({
   type: 'Query',
   definition(t) {
-    t.nonNull.list.field('findFruit', {
-      type: 'Fruit',
-      args: {
-        name: nonNull(stringArg()),
-      },
-      async resolve(_root, args) {
-        const data = await findFruitService({ name: args.name });
-        return data;
-      },
-    });
+    t.nonNull.list.field('findFruit', findFruit);
   },
 });
 
 const FruitsMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.nonNull.field('createFruitForFruitStorage', {
-      type: 'Fruit',
-      args: {
-        name: nonNull(stringArg()),
-        description: nonNull(stringArg()),
-        limit: nonNull(intArg()),
-      },
-      async resolve(_root, args) {
-        const fields = {
-          name: args.name,
-          description: args.description,
-          limit: args.limit,
-        };
-        const data = await createFruitService({ ...fields });
-        return data;
-      },
-    }),
-      t.nonNull.field('deleteFruitFromFruitStorage', {
-        type: 'Fruit',
-        args: {
-          name: nonNull(stringArg()),
-          forceDelete: booleanArg(),
-        },
-        async resolve(_root, args) {
-          const fields = {
-            name: args.name,
-            forceDelete: args.forceDelete,
-          };
-          const data = await deleteFruitService({ ...fields });
-          return data;
-        },
-      }),
-      t.nonNull.field('updateFruitForFruitStorage', {
-        type: 'Fruit',
-        args: {
-          name: nonNull(stringArg()),
-          limit: intArg(),
-          description: stringArg(),
-        },
-        async resolve(_root, args) {
-          const fields = {
-            name: args.name,
-            limit: args?.limit,
-            description: args?.description,
-          };
-          const data = await updateFruitService({ ...fields });
-          return data;
-        },
-      });
+    t.nonNull.field('createFruitForFruitStorage', createFruitForFruitStorage),
+      t.nonNull.field('deleteFruitFromFruitStorage', deleteFruitFromFruitStorage),
+      t.nonNull.field('updateFruitForFruitStorage', updateFruitForFruitStorage);
   },
 });
 
