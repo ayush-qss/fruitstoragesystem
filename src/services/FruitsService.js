@@ -5,6 +5,7 @@ const {
   updateFruit,
 } = require('../repository/FruitsRepository');
 const { errorMessages } = require('../constants/errorConstants.js');
+const { fruitCreated, fruitUpdated, fruitDeleted } = require("../utils/helper.js")
 
 const findFruitService = async ({ name, forFruitStore }) => {
   try {
@@ -38,6 +39,7 @@ const createFruitService = async ({ name, description, limit }) => {
       throw new Error(errorMessages.FruitExists);
     }
     const data = await createFruit({ name, description, limit });
+    fruitCreated(data);
     return data;
   } catch (err) {
     throw new Error(err.message)
@@ -46,7 +48,6 @@ const createFruitService = async ({ name, description, limit }) => {
 
 const deleteFruitService = async ({ name, forceDelete }) => {
   try {
-
     if (!name || forceDelete === null || forceDelete === undefined) {
       throw new Error(errorMessages.AllFieldsRequired);
     }
@@ -56,6 +57,7 @@ const deleteFruitService = async ({ name, forceDelete }) => {
     }
     if (forceDelete) {
       const data = await deleteFruit({ name });
+      fruitDeleted(data);
       return data;
     }
     return;
@@ -66,7 +68,6 @@ const deleteFruitService = async ({ name, forceDelete }) => {
 
 const updateFruitService = async ({ name, description, limit }) => {
   try {
-
     if (!name) {
       throw new Error(errorMessages.NameRequired);
     }
@@ -85,6 +86,7 @@ const updateFruitService = async ({ name, description, limit }) => {
     }
 
     const data = await updateFruit({ name, description, limit });
+    fruitUpdated(data);
     return data;
   } catch (err) {
     throw new Error(err.message)
