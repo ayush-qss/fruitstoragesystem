@@ -1,10 +1,9 @@
 const { makeSchema } = require('nexus');
-const { join } = require('path');
-const { FruitStorageQuery, FruitStorage } = require("./api/graphql/FruitStorage")
-const { FruitFactoryMutation, FruitFactory } = require("./api/graphql/FruitFactory")
+const { FruitStorageQuery, FruitStorage } = require("./api/graphql/FruitsStore")
+const { FruitsMutation, FruitsSchema } = require("./api/graphql/Fruits")
 
 const schema = makeSchema({
-  types: [FruitFactory, FruitFactoryMutation, FruitStorageQuery, FruitStorage],
+  types: [FruitsSchema, FruitsMutation, FruitStorageQuery, FruitStorage],
 });
 
 module.exports = schema

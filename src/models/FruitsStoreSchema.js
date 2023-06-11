@@ -11,6 +11,6 @@ const model = new mongoose.Schema({
   },
 });
 
-const FruitStorageSchema = mongoose.model('FruitStorage', model);
+const FruitStore = mongoose.model('FruitStore', model);
 
-module.exports = FruitStorageSchema;
+module.exports = FruitStore;

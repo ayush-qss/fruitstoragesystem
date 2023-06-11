@@ -1,8 +1,8 @@
 const { objectType, extendType } = require('nexus');
-const { findFruit } = require('../../repository/FruitFactory');
+const { findFruit } = require('../../repository/FruitsRepository');
 
 const FruitStorage = objectType({
-  name: 'Fruit',
+  name: 'FruitStore',
   definition(t) {
     t.string('name');
     t.string('description');
@@ -14,7 +14,7 @@ const FruitStorageQuery = extendType({
   type: 'Query',
   definition(t) {
     t.nonNull.list.field('findFruit', {
-      type: 'Fruit',
+      type: 'FruitStore',
       async resolve() {
         const data = await findFruit();
         return data;

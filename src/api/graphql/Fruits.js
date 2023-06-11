@@ -9,11 +9,12 @@ const {
 const {
   findFruitService,
   createFruitService,
-  deleteFruitService
-} = require('../../services/FruitFactory');
+  deleteFruitService,
+  updateFruitService
+} = require('../../services/FruitsService');
 
-const FruitFactory = objectType({
-  name: 'FruitFactory',
+const FruitsSchema = objectType({
+  name: 'Fruit',
   definition(t) {
     t.string('name');
     t.string('description');
@@ -21,21 +22,21 @@ const FruitFactory = objectType({
   },
 });
 
-const FruitFactoryMutation = extendType({
+const FruitsMutation = extendType({
   type: 'Mutation',
   definition(t) {
     t.nonNull.list.field('findFruit', {
-      type: 'FruitFactory',
+      type: 'Fruit',
       args: {
         name: nonNull(stringArg()),
       },
       async resolve(_root, args) {
-        const { data } = await findFruitService({ name: args.name });
+        const data = await findFruitService({ name: args.name });
         return data;
       },
     }),
       t.nonNull.field('createFruitForFruitStorage', {
-        type: 'FruitFactory',
+        type: 'Fruit',
         args: {
           name: nonNull(stringArg()),
           description: nonNull(stringArg()),
@@ -52,7 +53,7 @@ const FruitFactoryMutation = extendType({
         },
       }),
       t.nonNull.field('deleteFruitFromFruitStorage', {
-        type: 'FruitFactory',
+        type: 'Fruit',
         args: {
           name: nonNull(stringArg()),
           forceDelete: nonNull(booleanArg()),
@@ -65,8 +66,25 @@ const FruitFactoryMutation = extendType({
           const data = await deleteFruitService({ ...fields });
           return data;
         },
+      }),
+      t.nonNull.field('updateFruitForFruitStorage', {
+        type: 'Fruit',
+        args: {
+          name: nonNull(stringArg()),
+          limit: nonNull(intArg()),
+          description: nonNull(stringArg()),
+        },
+        async resolve(_root, args) {
+          const fields = {
+            name: args.name,
+            limit: args.limit,
+            description: args.description,
+          };
+          const data = await updateFruitService({ ...fields });
+          return data;
+        },
       });
   },
 });
 
-module.exports = { FruitFactoryMutation, FruitFactory };
+module.exports = { FruitsMutation, FruitsSchema };

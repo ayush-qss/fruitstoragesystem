@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const FactorySchema = new mongoose.Schema({
+const model = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -15,6 +15,6 @@ const FactorySchema = new mongoose.Schema({
   },
 });
 
-const myFactorySchema = mongoose.model('fruitfactories', FactorySchema);
+const FruitSchema = mongoose.model('fruits', model);
 
-module.exports = myFactorySchema
+module.exports = FruitSchema
