@@ -29,9 +29,10 @@ const createFruit = async (fruitDetails) => {
 
 const updateFruit = async ({ name, description, limit }) => {
   try {
-    const data = await FruitsSchema.updateOne(
+    const data = await FruitsSchema.findOneAndUpdate(
       { name },
-      { description, limit }
+      { description, limit },
+      { new: true }
     );
     return data;
   } catch (err) {

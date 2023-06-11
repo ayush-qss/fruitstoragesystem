@@ -36,7 +36,7 @@ const createFruitService = async ({ name, description, limit }) => {
 };
 
 const deleteFruitService = async ({ name, forceDelete }) => {
-  if (!name) {
+  if (!name || forceDelete === null || forceDelete === undefined) {
     throw new Error(errorMessages.AllFieldsRequired);
   }
   const isNameExists = await findFruit({ name });
@@ -61,7 +61,7 @@ const updateFruitService = async ({ name, description, limit }) => {
     throw new Error(errorMessages.FruitNotFound);
   }
 
-  if (description.length > 0 && description.length > 30) {
+  if (description?.length > 0 && description?.length > 30) {
     throw new Error(errorMessages.DescriptionLimit);
   }
   if (limit <= 0) {

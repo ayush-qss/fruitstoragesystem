@@ -62,7 +62,7 @@ const FruitsMutation = extendType({
         type: 'Fruit',
         args: {
           name: nonNull(stringArg()),
-          forceDelete: nonNull(booleanArg()),
+          forceDelete: booleanArg(),
         },
         async resolve(_root, args) {
           const fields = {
@@ -77,14 +77,14 @@ const FruitsMutation = extendType({
         type: 'Fruit',
         args: {
           name: nonNull(stringArg()),
-          limit: nonNull(intArg()),
-          description: nonNull(stringArg()),
+          limit: intArg(),
+          description: stringArg(),
         },
         async resolve(_root, args) {
           const fields = {
             name: args.name,
-            limit: args.limit,
-            description: args.description,
+            limit: args?.limit,
+            description: args?.description,
           };
           const data = await updateFruitService({ ...fields });
           return data;
