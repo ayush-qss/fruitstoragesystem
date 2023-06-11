@@ -28,6 +28,11 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Fruit: { // root type
+    description?: string | null; // String
+    limit?: number | null; // Int
+    name?: string | null; // String
+  }
   FruitFactory: { // root type
     description?: string | null; // String
     limit?: number | null; // Int
@@ -48,6 +53,11 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Fruit: { // field return type
+    description: string | null; // String
+    limit: number | null; // Int
+    name: string | null; // String
+  }
   FruitFactory: { // field return type
     description: string | null; // String
     limit: number | null; // Int
@@ -59,11 +69,16 @@ export interface NexusGenFieldTypes {
     findFruit: Array<NexusGenRootTypes['FruitFactory'] | null>; // [FruitFactory]!
   }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    findFruit: Array<NexusGenRootTypes['Fruit'] | null>; // [Fruit]!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Fruit: { // field return type name
+    description: 'String'
+    limit: 'Int'
+    name: 'String'
+  }
   FruitFactory: { // field return type name
     description: 'String'
     limit: 'Int'
@@ -75,7 +90,7 @@ export interface NexusGenFieldTypeNames {
     findFruit: 'FruitFactory'
   }
   Query: { // field return type name
-    ok: 'Boolean'
+    findFruit: 'Fruit'
   }
 }
 
