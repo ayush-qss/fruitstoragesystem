@@ -5,7 +5,7 @@ const findFruit = async ({ name }) => {
     const data = await FruitsSchema.find({ name });
     return data;
   } catch (err) {
-    return err.message;
+    throw new Error(err);
   }
 };
 
@@ -14,7 +14,7 @@ const deleteFruit = async ({ name }) => {
     const data = await FruitsSchema.deleteOne({ name });
     return data;
   } catch (err) {
-    return err.message;
+    throw new Error(err);
   }
 };
 
@@ -23,7 +23,7 @@ const createFruit = async (fruitDetails) => {
     const data = await FruitsSchema.create(fruitDetails);
     return data;
   } catch (err) {
-    return err.message;
+    throw new Error(err);
   }
 };
 
@@ -36,7 +36,7 @@ const updateFruit = async ({ name, description, limit }) => {
     );
     return data;
   } catch (err) {
-    return err.message;
+    throw new Error(err);
   }
 };
 

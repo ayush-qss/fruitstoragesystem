@@ -7,69 +7,88 @@ const {
 const { errorMessages } = require('../constants/errorConstants.js');
 
 const findFruitService = async ({ name, forFruitStore }) => {
-  if (!name) {
-    throw new Error(errorMessages.NameRequired);
-  }
-  const data = await findFruit({ name });
-  if (data.length === 0) {
-    if (forFruitStore) {
-      throw new Error(errorMessages.FruitNotFound + " in Fruits.");
+  try {
+    if (!name) {
+      throw new Error(errorMessages.NameRequired);
     }
-    throw new Error(errorMessages.FruitNotFound);
+    const data = await findFruit({ name });
+    if (data.length === 0) {
+      if (forFruitStore) {
+        throw new Error(errorMessages.FruitNotFound + " in Fruits.");
+      }
+      throw new Error(errorMessages.FruitNotFound);
+    }
+    return data;
+  } catch (err) {
+    throw new Error(err.message)
   }
-  return data;
 };
 
 const createFruitService = async ({ name, description, limit }) => {
-  if (!name || !description || limit <= 0) {
-    throw new Error(errorMessages.AllFieldsRequired);
+  try {
+
+    if (!name || !description || limit <= 0) {
+      throw new Error(errorMessages.AllFieldsRequired);
+    }
+    if (description.length > 30) {
+      throw new Error(errorMessages.DescriptionLimit);
+    }
+    const isNameExists = await findFruit({ name });
+    if (isNameExists.length > 0) {
+      throw new Error(errorMessages.FruitExists);
+    }
+    const data = await createFruit({ name, description, limit });
+    return data;
+  } catch (err) {
+    throw new Error(err.message)
   }
-  if (description.length > 30) {
-    throw new Error(errorMessages.DescriptionLimit);
-  }
-  const isNameExists = await findFruit({ name });
-  if (isNameExists.length > 0) {
-    throw new Error(errorMessages.FruitExists);
-  }
-  const data = await createFruit({ name, description, limit });
-  return data;
 };
 
 const deleteFruitService = async ({ name, forceDelete }) => {
-  if (!name || forceDelete === null || forceDelete === undefined) {
-    throw new Error(errorMessages.AllFieldsRequired);
+  try {
+
+    if (!name || forceDelete === null || forceDelete === undefined) {
+      throw new Error(errorMessages.AllFieldsRequired);
+    }
+    const isNameExists = await findFruit({ name });
+    if (isNameExists.length === 0) {
+      throw new Error(errorMessages.FruitNotFound);
+    }
+    if (forceDelete) {
+      const data = await deleteFruit({ name });
+      return data;
+    }
+    return;
+  } catch (err) {
+    throw new Error(err.message)
   }
-  const isNameExists = await findFruit({ name });
-  if (isNameExists.length === 0) {
-    throw new Error(errorMessages.FruitNotFound);
-  }
-  if (forceDelete) {
-    const data = await deleteFruit({ name });
-    return data;
-  }
-  return;
 };
 
 const updateFruitService = async ({ name, description, limit }) => {
-  if (!name) {
-    throw new Error(errorMessages.NameRequired);
-  }
+  try {
 
-  const isNameExists = await findFruit({ name });
+    if (!name) {
+      throw new Error(errorMessages.NameRequired);
+    }
 
-  if (isNameExists.length === 0) {
-    throw new Error(errorMessages.FruitNotFound);
-  }
+    const isNameExists = await findFruit({ name });
 
-  if (description?.length > 0 && description?.length > 30) {
-    throw new Error(errorMessages.DescriptionLimit);
-  }
-  if (limit <= 0) {
-    throw new Error(errorMessages.InvalidLimit);
-  }
+    if (isNameExists.length === 0) {
+      throw new Error(errorMessages.FruitNotFound);
+    }
 
-  const data = await updateFruit({ name, description, limit });
-  return data;
+    if (description?.length > 0 && description?.length > 30) {
+      throw new Error(errorMessages.DescriptionLimit);
+    }
+    if (limit <= 0) {
+      throw new Error(errorMessages.InvalidLimit);
+    }
+
+    const data = await updateFruit({ name, description, limit });
+    return data;
+  } catch (err) {
+    throw new Error(err.message)
+  }
 };
 
 module.exports = { findFruitService, createFruitService, deleteFruitService, updateFruitService };

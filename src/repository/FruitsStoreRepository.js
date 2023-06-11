@@ -5,7 +5,7 @@ const findFruitFromStore = async ({ name }) => {
         const data = await FruitsStoreSchema.find({ name })
         return data
     } catch (err) {
-        return err.message
+        throw new Error(err)
     }
 }
 
@@ -14,7 +14,7 @@ const createFruit = async ({ name, amount }) => {
         const data = await FruitsStoreSchema.create({ name, amount })
         return data
     } catch (err) {
-        return err.message
+        throw new Error(err)
     }
 }
 
@@ -23,7 +23,7 @@ const updateFruit = async ({ name, amount }) => {
         const data = await FruitsStoreSchema.findOneAndUpdate({ name }, { amount }, { new: true })
         return data
     } catch (err) {
-        return err.message
+        throw new Error(err)
     }
 }
 
@@ -32,7 +32,7 @@ const deleteFruit = async ({ name }) => {
         const data = await FruitsStoreSchema.deleteOne({ name })
         return data
     } catch (err) {
-        return err.message
+        throw new Error(err)
     }
 }
 
