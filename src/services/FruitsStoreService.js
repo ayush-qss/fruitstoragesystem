@@ -40,4 +40,16 @@ const removeFruitService = async ({ name, amount }) => {
     return data;
 }
 
-module.exports = { createFruitService, removeFruitService }
+const deleteFruitService = async ({ name }) => {
+    if (!name) {
+        throw new Error(errorMessages.InvalidFields)
+    }
+    const isFruitExist = await findFruitFromStore({ name })
+    if (isFruitExist.length === 0) {
+        throw new Error(errorMessages.FruitNotFound)
+    }
+    const data = await deleteFruit({ name })
+    return data
+}
+
+module.exports = { createFruitService, removeFruitService, deleteFruitService }
