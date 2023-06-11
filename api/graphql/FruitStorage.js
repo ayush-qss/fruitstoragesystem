@@ -1,4 +1,4 @@
-const { objectType, extendType, stringArg, nonNull, intArg } = require('nexus');
+const { objectType, extendType } = require('nexus');
 const { findFruit } = require('../../repository/FruitFactory');
 
 const FruitStorage = objectType({
@@ -23,7 +23,5 @@ const FruitStorageQuery = extendType({
     });
   },
 });
-
-
 
 module.exports = { FruitStorageQuery, FruitStorage };
