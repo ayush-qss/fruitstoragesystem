@@ -51,6 +51,13 @@ const updateFruitService = async ({ name, description, limit }) => {
   if (!name) {
     throw new Error(errorMessages.NameRequired);
   }
+
+  const isNameExists = await findFruit({ name });
+
+  if (isNameExists.length === 0) {
+    throw new Error(errorMessages.FruitNotFound);
+  }
+
   if (description.length > 0 && description.length > 30) {
     throw new Error(errorMessages.DescriptionLimit);
   }
@@ -58,11 +65,6 @@ const updateFruitService = async ({ name, description, limit }) => {
     throw new Error(errorMessages.InvalidLimit);
   }
 
-  const isNameExists = await findFruit({ name });
-
-  if (isNameExists.length === 0) {
-    throw new Error(errorMessages.FruitNotFound);
-  }
   const data = await updateFruit({ name, description, limit });
   return data;
 };

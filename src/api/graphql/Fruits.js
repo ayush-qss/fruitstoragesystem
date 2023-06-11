@@ -22,8 +22,8 @@ const FruitsSchema = objectType({
   },
 });
 
-const FruitsMutation = extendType({
-  type: 'Mutation',
+const FruitQuery = extendType({
+  type: 'Query',
   definition(t) {
     t.nonNull.list.field('findFruit', {
       type: 'Fruit',
@@ -34,24 +34,30 @@ const FruitsMutation = extendType({
         const data = await findFruitService({ name: args.name });
         return data;
       },
+    });
+  },
+});
+
+const FruitsMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('createFruitForFruitStorage', {
+      type: 'Fruit',
+      args: {
+        name: nonNull(stringArg()),
+        description: nonNull(stringArg()),
+        limit: nonNull(intArg()),
+      },
+      async resolve(_root, args) {
+        const fields = {
+          name: args.name,
+          description: args.description,
+          limit: args.limit,
+        };
+        const data = await createFruitService({ ...fields });
+        return data;
+      },
     }),
-      t.nonNull.field('createFruitForFruitStorage', {
-        type: 'Fruit',
-        args: {
-          name: nonNull(stringArg()),
-          description: nonNull(stringArg()),
-          limit: nonNull(intArg()),
-        },
-        async resolve(_root, args) {
-          const fields = {
-            name: args.name,
-            description: args.description,
-            limit: args.limit,
-          };
-          const data = await createFruitService({ ...fields });
-          return data;
-        },
-      }),
       t.nonNull.field('deleteFruitFromFruitStorage', {
         type: 'Fruit',
         args: {
@@ -87,4 +93,4 @@ const FruitsMutation = extendType({
   },
 });
 
-module.exports = { FruitsMutation, FruitsSchema };
+module.exports = { FruitsMutation, FruitsSchema, FruitQuery };
