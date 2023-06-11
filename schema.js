@@ -1,9 +1,10 @@
 const { makeSchema } = require('nexus');
 const { join } = require('path');
-import * as types from  "./api/graphql/FruitFactory"
+const { FruitStorageQuery, FruitStorage } = require("./api/graphql/FruitStorage")
+const { FruitFactoryMutation, FruitFactory } = require("./api/graphql/FruitFactory")
 
 const schema = makeSchema({
-  types,
+  types: [FruitStorageQuery, FruitStorage, FruitFactoryMutation, FruitFactory],
   outputs: {
     typegen: join(__dirname, './models', 'nexus-typegen.ts'), // 2
     schema: join(__dirname, './models', 'schema.graphql'), // 3

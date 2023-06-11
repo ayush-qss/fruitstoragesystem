@@ -1,18 +1,18 @@
-import {
+const {
   objectType,
   extendType,
   stringArg,
   nonNull,
   intArg,
   booleanArg,
-} from 'nexus';
+} = require('nexus');
 const {
   findFruitService,
   createFruitService,
   deleteFruitService
 } = require('../../services/FruitFactory');
 
-export const FruitFactory = objectType({
+const FruitFactory = objectType({
   name: 'FruitFactory',
   definition(t) {
     t.string('name');
@@ -21,7 +21,7 @@ export const FruitFactory = objectType({
   },
 });
 
-export const FruitFactoryMutation = extendType({
+const FruitFactoryMutation = extendType({
   type: 'Mutation',
   definition(t) {
     t.nonNull.list.field('findFruit', {
@@ -68,3 +68,5 @@ export const FruitFactoryMutation = extendType({
       });
   },
 });
+
+module.exports = { FruitFactoryMutation, FruitFactory };

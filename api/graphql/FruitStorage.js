@@ -1,7 +1,7 @@
-import { objectType, extendType, stringArg, nonNull, intArg } from 'nexus';
+const { objectType, extendType, stringArg, nonNull, intArg } = require('nexus');
 const { findFruit } = require('../../repository/FruitFactory');
 
-export const FruitStorage = objectType({
+const FruitStorage = objectType({
   name: 'FruitFactory',
   definition(t) {
     t.int('id');
@@ -11,7 +11,7 @@ export const FruitStorage = objectType({
   },
 });
 
-export const FruitStorageQuery = extendType({
+const FruitStorageQuery = extendType({
   type: 'Query',
   definition(t) {
     t.nonNull.list.field('findFruit', {
@@ -24,3 +24,6 @@ export const FruitStorageQuery = extendType({
   },
 });
 
+
+
+module.exports = { FruitStorageQuery, FruitStorage };

@@ -28,7 +28,7 @@ const deleteFruit = async ({ name }) => {
   }
 };
 
-const createFruit = async (fruitDetails: any) => {
+const createFruit = async (fruitDetails) => {
   try {
     const data = await myFruitFactory.create(fruitDetails);
     return data;
