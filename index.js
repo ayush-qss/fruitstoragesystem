@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const connect = require('./connect');
+const connect = require('./src/connect');
 const { server } = require('./server');
 
 app.use(express.json());
