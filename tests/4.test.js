@@ -35,6 +35,10 @@ test('This will pass, since the lemon is having limit 10 , which is less than 5.
     });
 });
 
+// Note : 
+// If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
+// If errors object is present, then test will pass.
+
 test('This test case, will fail, since lemon is having limit 10, and we are proving amount 11.', async () => {
     const query = `
     mutation{

@@ -14,6 +14,10 @@ beforeAll(async () => {
     await axios.post(apiUrl, { query });
 });
 
+// Note : 
+// If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
+// If errors object is present, then test will pass.
+
 test('This test case will fail, since we are not passing "forcedelete" field.', async () => {
     const query = `
     mutation {

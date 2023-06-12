@@ -40,6 +40,10 @@ test('This will pass, since it will find "lemon", which is present.', async () =
     });
 });
 
+// Note : 
+// If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
+// If errors object is present, then test will pass.
+
 test('This test will fail, since "this is lemon" fruit does not exists', async () => {
     const query = `
     {

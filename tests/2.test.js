@@ -37,6 +37,10 @@ test('We are updating the description of lemon.This will pass.', async () => {
     });
 });
 
+// Note : 
+// If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
+// If errors object is present, then test will pass.
+
 test('This test case, will fail since we are updating description with more than 30 letters.', async () => {
     const query = `
     mutation{

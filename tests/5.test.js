@@ -35,6 +35,10 @@ test('This will pass, since the lemon is present and its amount is 5.', async ()
     });
 });
 
+// Note : 
+// If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
+// If errors object is present, then test will pass.
+
 test('This test case, will fail, since lemon is having amount 6, and we are providing amount 6.', async () => {
     const query = `
     mutation{

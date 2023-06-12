@@ -1,6 +1,10 @@
 const axios = require('axios');
 const apiUrl = 'http://localhost:4000/';
 
+// Note : 
+// If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
+// If errors object is present, then test will pass.
+
 test('this test needs to be fail since, we are creating lemon with long description.', async () => {
     const query = `
   mutation{
@@ -38,6 +42,10 @@ test('This will create "lemon" with description "this is lemon" with a limit of 
         }
     });
 });
+
+// Note : 
+// If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
+// If errors object is present, then test will pass.
 
 test('This test will fail, since "lemon" fruit is already created', async () => {
     const query = `
