@@ -8,7 +8,6 @@ const FruitStoreMutation = extendType({
     definition(t) {
         t.nonNull.field('storeFruitToFruitStorage', storeFruitToFruitStorage),
             t.nonNull.field('removeFruitFromFruitStorage', removeFruitFromFruitStorage);
-        // t.nonNull.field('deleteFruitFromFruitStorage', deleteFruitFromFruitStorage);
     },
 });
 

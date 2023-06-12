@@ -4,7 +4,6 @@ const { findFruitService: findFruitFromFruits } = require("./FruitsService")
 
 const createFruitService = async ({ name, amount }) => {
     try {
-
         if (!name || amount <= 0) {
             throw new Error(errorMessages.InvalidFields)
         }
@@ -14,9 +13,7 @@ const createFruitService = async ({ name, amount }) => {
         }
         const isFruitExistInStore = await findFruitFromStore({ name })
         if (isFruitExistInStore.length !== 0) {
-            amount = isFruitExistInStore[0].amount + amount
-            const data = await updateFruit({ name, amount })
-            return data;
+            throw new Error(errorMessages.FruitExists)
         }
         const data = await createFruit({ name, amount })
         return data;

@@ -6,12 +6,6 @@ const {
   intArg,
   booleanArg,
 } = require('nexus');
-const {
-  findFruitService,
-  createFruitService,
-  deleteFruitService,
-  updateFruitService
-} = require('../../services/FruitsService');
 const { createFruitForFruitStorage, deleteFruitFromFruitStorage, updateFruitForFruitStorage } = require("../../api/graphql/mutations/FruitsMutations")
 const { findFruit } = require("../../api/graphql/queries/FruitsQuery")
 

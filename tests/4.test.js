@@ -64,4 +64,15 @@ afterAll(async () => {
       }
   `;
     await axios.post(apiUrl, { query });
+
+    const query2 = `
+    mutation{
+        removeFruitFromFruitStorage(name: "lemon", amount: 5) {
+          name
+          amount
+        }
+      }
+    `;
+    await axios.post(apiUrl, { query: query2 });
+
 });

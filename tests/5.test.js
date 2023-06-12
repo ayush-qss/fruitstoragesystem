@@ -12,6 +12,17 @@ beforeAll(async () => {
         }
     `;
     await axios.post(apiUrl, { query });
+
+    const query2 = `
+    mutation{
+        storeFruitToFruitStorage(name: "lemon", amount: 5) {
+            name
+            amount
+            }
+        }
+    `;
+    await axios.post(apiUrl, { query: query2 });
+
 });
 
 test('This will pass, since the lemon is present and its amount is 5.', async () => {
