@@ -31,19 +31,13 @@ const createFruitService = async ({ name, description, limit }) => {
   try {
     session.startTransaction()
     if (!name || !description || limit <= 0) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.AllFieldsRequired)
     }
     if (description.length > 30) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.DescriptionLimit)
     }
     const isNameExists = await findFruit({ name })
     if (isNameExists.length > 0) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.FruitExists)
     }
 
@@ -65,19 +59,17 @@ const deleteFruitService = async ({ name, forceDelete }) => {
   try {
     session.startTransaction()
     if (!name || forceDelete === null || forceDelete === undefined) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.AllFieldsRequired)
     }
     const isNameExists = await findFruit({ name })
     if (isNameExists.length === 0) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.FruitNotFound)
     }
     if (forceDelete) {
       const data = await deleteFruit({ name })
       fruitDeleted(data)
+      await session.commitTransaction()
+      await session.endSession()
       return data
     }
     await session.commitTransaction()
@@ -94,27 +86,19 @@ const updateFruitService = async ({ name, description, limit }) => {
   try {
     session.startTransaction()
     if (!name) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.NameRequired)
     }
 
     const isNameExists = await findFruit({ name })
 
     if (isNameExists.length === 0) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.FruitNotFound)
     }
 
     if (description?.length > 0 && description?.length > 30) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.DescriptionLimit)
     }
     if (limit <= 0) {
-      await session.abortTransaction()
-      await session.endSession()
       throw new Error(errorMessages.InvalidLimit)
     }
 
