@@ -1,12 +1,13 @@
-const axios = require('axios');
-const apiUrl = 'http://localhost:4000/';
+/* eslint-disable no-undef */
+const axios = require('axios')
+const apiUrl = 'http://localhost:4000/'
 
-// Note : 
+// Note :
 // If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
 // If errors object is present, then test will pass.
 
 test('this test needs to be fail since, we are creating lemon with long description.', async () => {
-    const query = `
+  const query = `
   mutation{
     createFruitForFruitStorage(name: "lemon", description: "this is a lemon fruit with a long description", limit: 10) {
         name
@@ -14,14 +15,14 @@ test('this test needs to be fail since, we are creating lemon with long descript
         limit
       }
     }
-`;
+`
 
-    const response = await axios.post(apiUrl, { query });
-    expect(response.data).toHaveProperty("errors");
-});
+  const response = await axios.post(apiUrl, { query })
+  expect(response.data).toHaveProperty('errors')
+})
 
 test('This will create "lemon" with description "this is lemon" with a limit of "10"', async () => {
-    const query = `
+  const query = `
     mutation{
         createFruitForFruitStorage(name: "lemon", description: "this is lemon", limit: 10) {
           limit
@@ -29,26 +30,26 @@ test('This will create "lemon" with description "this is lemon" with a limit of 
           name
         }
       }
-  `;
+  `
 
-    const response = await axios.post(apiUrl, { query });
-    expect(response.data).toMatchObject({
-        "data": {
-            "createFruitForFruitStorage": {
-                "limit": 10,
-                "description": "this is lemon",
-                "name": "lemon"
-            }
-        }
-    });
-});
+  const response = await axios.post(apiUrl, { query })
+  expect(response.data).toMatchObject({
+    data: {
+      createFruitForFruitStorage: {
+        limit: 10,
+        description: 'this is lemon',
+        name: 'lemon'
+      }
+    }
+  })
+})
 
-// Note : 
+// Note :
 // If this test fails, it will have an errors object, so in this test, we are checking that if there is an errors object or not.
 // If errors object is present, then test will pass.
 
 test('This test will fail, since "lemon" fruit is already created', async () => {
-    const query = `
+  const query = `
     mutation{
         createFruitForFruitStorage(name: "lemon", description: "this is lemon", limit: 10) {
           limit
@@ -56,14 +57,14 @@ test('This test will fail, since "lemon" fruit is already created', async () => 
           name
         }
       }
-  `;
+  `
 
-    const response = await axios.post(apiUrl, { query });
-    expect(response.data).toHaveProperty("errors");
-});
+  const response = await axios.post(apiUrl, { query })
+  expect(response.data).toHaveProperty('errors')
+})
 
 afterAll(async () => {
-    const query = `
+  const query = `
     mutation{
         deleteFruitFromFruitStorage(name: "lemon", forceDelete: true) {
           limit
@@ -71,6 +72,6 @@ afterAll(async () => {
           name
         }
       }
-  `;
-    await axios.post(apiUrl, { query });
-});
+  `
+  await axios.post(apiUrl, { query })
+})

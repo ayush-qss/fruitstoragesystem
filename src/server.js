@@ -1,8 +1,8 @@
-const { ApolloServer } = require('apollo-server');
-const schema = require('./api/graphql/schema');
+const { ApolloServer } = require('apollo-server')
+const schema = require('./api/graphql/schema')
 
 const server = new ApolloServer({
-  schema,
-});
+  schema
+})
 
-module.exports = { server };
+module.exports = { server }
